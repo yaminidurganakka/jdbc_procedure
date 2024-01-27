@@ -1,0 +1,53 @@
+package com.jdbc;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class Practice_25 {
+
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			try {
+				Connection cn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "yamini", "nakka");
+				CallableStatement cs=cn.prepareCall("{call emplinsert58(?,?,?,?,?,?,?)}");
+				System.out.println("enter emp id");
+				String eid=sc.nextLine();
+				System.out.println("enter name");
+				String ename=sc.nextLine();
+				System.out.println("enter designation");
+				String edesg=sc.nextLine();
+				System.out.println("enter mid");
+				String emailid=sc.nextLine();
+				System.out.println("enter pno");
+				Long ephno=sc.nextLong();
+				System.out.println("enter bsal");
+				int ebsal=sc.nextInt();
+				float etotsal=ebsal+(0.93F*ebsal)+(0.61F*ebsal);
+				cs.setString(1, eid);
+				cs.setString(2, ename);
+				cs.setString(3, edesg);
+				cs.setString(4, emailid);
+				cs.setLong(5,ephno);
+				cs.setInt(6, ebsal);
+				cs.setFloat(7, etotsal);
+				cs.execute();
+				System.out.println("procedure executed successfully");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+
+}
